@@ -1,0 +1,386 @@
+{
+	"info": {
+		"_postman_id": "48197099-756eb453-9906-4d16-b202-4ba0f8fa7d1b",
+		"name": "Reqres API Test Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST - Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36ec2e0f-820f-44ae-9df3-2648e75a40c2",
+						"exec": [
+							"pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+							"pm.test('Status message is Created', function () { pm.response.to.have.status('Created'); });",
+							"var jsonData = pm.response.json();",
+							"pm.expect(jsonData).to.have.property('id');",
+							"pm.collectionVariables.set('user_id', jsonData.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "48197099-b1f8510c-8c46-4041-a7d2-fbed6e067d4d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Get Single User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+							"var jsonData = pm.response.json();",
+							"pm.expect(jsonData.data).to.have.property('id');"
+						],
+						"type": "text/javascript",
+						"id": "a4819a98-f382-4f46-b39d-595244921832"
+					}
+				}
+			],
+			"id": "48197099-72d94284-18cc-49bb-b521-2b02df0ed7d8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/{{user_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - List Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f485a4c-2ad7-4df5-acd7-f10b4df4c291",
+						"exec": [
+							"pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+							"var jsonData = pm.response.json();",
+							"pm.expect(jsonData).to.have.property('data');"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "48197099-a7fc3ffc-f015-4769-aa9d-6b61d6f139b4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users?page=2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH - Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+							"var jsonData = pm.response.json();",
+							"pm.expect(jsonData).to.have.property('job', 'Updated Job');"
+						],
+						"type": "text/javascript",
+						"id": "f01df84e-8540-4c16-ad29-f70ce224801e"
+					}
+				}
+			],
+			"id": "48197099-5a1718db-b42b-48a8-a4b6-e0d5fc36c801",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"job\": \"Updated Job\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/{{user_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT - Replace User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+							"var jsonData = pm.response.json();",
+							"pm.expect(jsonData).to.have.property('job', 'Replaced Job');"
+						],
+						"type": "text/javascript",
+						"id": "a9fbb6b7-c649-46c3-82fb-731c2cb2ecb1"
+					}
+				}
+			],
+			"id": "48197099-c3113a9c-a838-4895-b69d-e28703256a69",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"{{name}}\", \"job\": \"Replaced Job\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/{{user_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () { pm.response.to.have.status(204); });"
+						],
+						"type": "text/javascript",
+						"id": "102fe056-3269-472d-98e2-bddd38eabf81"
+					}
+				}
+			],
+			"id": "48197099-da28673b-f643-4625-bbe6-8ac37f2be491",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/{{user_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NEGATIVE - GET Invalid User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function () { pm.response.to.have.status(404); });"
+						],
+						"type": "text/javascript",
+						"id": "799ba6f1-316d-4cb7-83f3-c7dedacfbfb6"
+					}
+				}
+			],
+			"id": "48197099-6406a020-af6d-4e3e-b232-7522c9f879a0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/99999",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"99999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NEGATIVE - POST Missing Fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 400 or 201 depending on API behavior', function () {",
+							"   pm.expect([400, 201]).to.include(pm.response.code);",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "e4f9ef6a-cc36-471e-addc-1c1c34e96ec8"
+					}
+				}
+			],
+			"id": "48197099-78d1c2fe-732d-46d2-b0de-d378f414540e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a931817b-4cff-48ad-a8c3-2b5661269ae8",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.request.headers.add({ key: 'x-api-key', value: 'reqres-free-v1' });"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "18289def-459d-4bf6-8aca-0855dd3f007d",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://reqres.in"
+		},
+		{
+			"key": "name",
+			"value": "John Doe"
+		},
+		{
+			"key": "job",
+			"value": "Developer"
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		}
+	]
+}
